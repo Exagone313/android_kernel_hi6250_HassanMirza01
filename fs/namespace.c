@@ -915,14 +915,7 @@ static void commit_tree(struct mount *mnt)
 
 	list_splice(&head, n->list.prev);
 
-<<<<<<< HEAD
-	attach_shadowed(mnt, parent, shadows);
-=======
-	n->mounts += n->pending_mounts;
-	n->pending_mounts = 0;
-
 	__attach_mnt(mnt, parent);
->>>>>>> 6925511ae... mnt: Tuck mounts under others instead of creating shadow/side mounts.
 	touch_mnt_namespace(n);
 }
 
@@ -1916,17 +1909,11 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 			struct path *parent_path)
 {
 	HLIST_HEAD(tree_list);
-<<<<<<< HEAD
-=======
-	struct mnt_namespace *ns = dest_mnt->mnt_ns;
 	struct mountpoint *smp;
->>>>>>> 6925511ae... mnt: Tuck mounts under others instead of creating shadow/side mounts.
 	struct mount *child, *p;
 	struct hlist_node *n;
 	int err;
 
-<<<<<<< HEAD
-=======
 	/* Preallocate a mountpoint in case the new mounts need
 	 * to be tucked under other mounts.
 	 */
@@ -1934,14 +1921,6 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 	if (IS_ERR(smp))
 		return PTR_ERR(smp);
 
-	/* Is there space to add these mounts to the mount namespace? */
-	if (!parent_path) {
-		err = count_mounts(ns, source_mnt);
-		if (err)
-			goto out;
-	}
-
->>>>>>> 6925511ae... mnt: Tuck mounts under others instead of creating shadow/side mounts.
 	if (IS_MNT_SHARED(dest_mnt)) {
 		err = invent_group_ids(source_mnt, true);
 		if (err)
@@ -1986,15 +1965,10 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 	unlock_mount_hash();
 	cleanup_group_ids(source_mnt, NULL);
  out:
-<<<<<<< HEAD
-=======
-	ns->pending_mounts = 0;
-
 	read_seqlock_excl(&mount_lock);
 	put_mountpoint(smp);
 	read_sequnlock_excl(&mount_lock);
 
->>>>>>> 6925511ae... mnt: Tuck mounts under others instead of creating shadow/side mounts.
 	return err;
 }
 
